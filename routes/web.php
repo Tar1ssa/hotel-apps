@@ -18,6 +18,9 @@ Route::get('belajar', [\App\Http\Controllers\BelajarController::class, 'index'])
 
 
 Route::resource('dashboard', \App\Http\Controllers\DashboardController::class);
+Route::resource('user', \App\Http\Controllers\UserController::class);
+Route::resource('categories', \App\Http\Controllers\CategoriesController::class);
+Route::resource('rooms', \App\Http\Controllers\RoomsController::class);
 
 Route::get("panggil", [\App\Http\Controllers\BelajarController::class, 'getCallName']);
 Route::get("tambah", [\App\Http\Controllers\BelajarController::class, 'tambah'])->name('tambah');

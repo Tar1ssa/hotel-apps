@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Categories;
 use App\Models\Rooms;
+use Illuminate\Support\Facades\Storage;
 
 class RoomsController extends Controller
 {
@@ -37,9 +38,9 @@ class RoomsController extends Controller
     {
         $data = [
             'category_id' => $request->category_id,
-            'name' => $request->name,
-            'facility' => $request->facility,
-            'price' => $request->price,
+            'name'        => $request->name,
+            'facility'    => $request->facility,
+            'price'       => $request->price,
             'description' => $request->description,
         ];
         if ($request->hasFile('image_cover')) {
@@ -62,7 +63,10 @@ class RoomsController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $categories = Categories::get();
+        $edit = Rooms::find($id);
+        $title = "Ubah data kamar";
+        return view('rooms.edit', compact('edit', 'categories', 'title'));
     }
 
     /**
@@ -70,14 +74,37 @@ class RoomsController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $data = [
+            'category_id' => $request->category_id,
+            'name'        => $request->name,
+            'facility'    => $request->facility,
+            'price'       => $request->price,
+            'description' => $request->description,
+        ];
+
+        $rooms = Rooms::find($id);
+
+        if ($request->hasFile('image_cover')) {
+            if ($rooms->image_cover && Storage::disk('public')->exists($rooms->image_cover)) {
+                Storage::disk('public')->delete($rooms->image_cover);
+            }
+            $data['image_cover']->$request->file('image_cover')->store('rooms', 'public');
+        }
+        $rooms->update($data);
+        return redirect()->to('rooms');
     }
+
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
-        //
+        $rooms = Rooms::find($id);
+        if ($rooms->image_cover && Storage::disk('public')->exists($rooms->image_cover)) {
+            Storage::disk('public')->delete($rooms->image_cover);
+        }
+        $rooms->delete();
+        return redirect()->to('rooms');
     }
 }

@@ -1,5 +1,5 @@
 @extends('app')
-@section('pagetitle', 'Data Kategori')
+@section('pagetitle', 'Data Kamar')
 @section('content')
 <div class="row mt-3">
     <div class="col-sm-12">
@@ -24,7 +24,7 @@
                         @foreach ($datas as $keydatas => $valuedatas)
                             <tr>
                             <td>{{ $keydatas += 1 }}</td>
-                            <td>{{ $valuedatas->name }}</td>
+                            <td><img width="100" src="{{ asset('storage/' . $valuedatas->image_cover) }}" alt=""></td>
                             <td>{{ $valuedatas->category->name }}</td>
                             <td>{{ $valuedatas->name }}</td>
                             <td>{{ number_format($valuedatas->price) }}</td>

@@ -1,8 +1,10 @@
 <?php
 
-use Illuminate\Routing\Route as RoutingRoute;
+use App\Models\guests;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\GuestsController;
+use Illuminate\Routing\Route as RoutingRoute;
 
 Route::get('/', function () {
     return view('welcome');
@@ -21,6 +23,9 @@ Route::resource('dashboard', \App\Http\Controllers\DashboardController::class);
 Route::resource('user', \App\Http\Controllers\UserController::class);
 Route::resource('categories', \App\Http\Controllers\CategoriesController::class);
 Route::resource('rooms', \App\Http\Controllers\RoomsController::class);
+Route::resource('guests', \App\Http\Controllers\GuestsController::class);
+
+// Route::get('guests', [GuestsController::class, 'index'])->name('guests');
 
 Route::get("panggil", [\App\Http\Controllers\BelajarController::class, 'getCallName']);
 Route::get("tambah", [\App\Http\Controllers\BelajarController::class, 'tambah'])->name('tambah');

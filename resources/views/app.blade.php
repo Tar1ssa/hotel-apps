@@ -86,6 +86,42 @@
 
   <!-- Template Main JS File -->
   <script src="{{ asset('assets/js/main.js') }}"></script>
+  <script>
+    // variable
+    // let
+    // var
+    // const
+
+    let category_id = document.querySelector('#category_id');
+    let roomid = document.getElementById('room_id');
+    category_id.addEventListener('change',async function() {
+        const id_category = this.value;
+        roomid.innerHTML = "<option data-price value=''>Pilih kamar..</option>";
+
+        // fetch / fetching yaitu ambil data dari backed, ajax
+        const res = await fetch(`/get-room-by-category/${id_category}`);
+        const data = await res.json();
+        data.data.forEach(room => {
+            const option = document.createElement('option');
+            option.value = room.id;
+            option.textContent = `${room.name}`;
+            option.setAttribute('data-price', room.price);
+            roomid.appendChild(option);
+        });
+
+        // console.log("data", data);
+    });
+
+    roomid.addEventListener('change', function(){
+        const selectedOption = this.options[this.selectedIndex];
+        const price = selectedOption.getAttribute('data-price') || 0;
+        const rupiah = new Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR'
+        }).format(price);
+        document.getElementById('roomrate').textContent = rupiah;
+    });
+  </script>
 
 </body>
 

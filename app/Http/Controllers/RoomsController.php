@@ -72,27 +72,7 @@ class RoomsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-    {
-        $data = [
-            'category_id' => $request->category_id,
-            'name'        => $request->name,
-            'facility'    => $request->facility,
-            'price'       => $request->price,
-            'description' => $request->description,
-        ];
-
-        $rooms = Rooms::find($id);
-
-        if ($request->hasFile('image_cover')) {
-            if ($rooms->image_cover && Storage::disk('public')->exists($rooms->image_cover)) {
-                Storage::disk('public')->delete($rooms->image_cover);
-            }
-            $data['image_cover']->$request->file('image_cover')->store('rooms', 'public');
-        }
-        $rooms->update($data);
-        return redirect()->to('rooms');
-    }
+    public function update(Request $request, string $id) {}
 
 
     /**

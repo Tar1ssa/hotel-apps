@@ -79,13 +79,7 @@ class GuestsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-    {
-        $categories = Categories::get();
-        $edit = Guest::find($id);
-        $title = "Ubah data tamu";
-        return view('guests.edit', compact('edit', 'categories', 'title'));
-    }
+    public function update(Request $request, string $id) {}
 
     /**
      * Remove the specified resource from storage.

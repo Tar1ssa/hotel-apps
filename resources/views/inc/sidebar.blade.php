@@ -16,22 +16,27 @@
         <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
         <a href="{{ route('user.index') }}">
-              <i class="bi bi-circle"></i><span>Pengguna</span>
+              <i class="bi bi-file-person"></i><span>Pengguna</span>
             </a>
           </li>
           <li>
             <a href="{{ route(name: 'categories.index') }}">
-              <i class="bi bi-circle"></i><span>Kategori Kamar</span>
+              <i class="bi bi-tags"></i><span>Kategori Kamar</span>
             </a>
           </li>
           <li>
             <a href="{{ route(name: 'rooms.index') }}">
-              <i class="bi bi-circle"></i><span>Kamar</span>
+              <i class="bi bi-door-open"></i><span>Kamar</span>
             </a>
           </li>
           <li>
             <a href="{{ route(name: 'guests.index') }}">
-              <i class="bi bi-circle"></i><span>Informasi Tamu</span>
+              <i class="bi bi-people"></i><span>Informasi Tamu</span>
+            </a>
+          </li>
+          <li>
+            <a href="{{ route(name: 'reservation.index') }}">
+              <i class="bi bi-calendar"></i><span>Reservasi</span>
             </a>
           </li>
         </ul>

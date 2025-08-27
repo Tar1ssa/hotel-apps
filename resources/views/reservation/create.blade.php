@@ -41,9 +41,27 @@
                             </select>
                             </div>
 
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="mb-3">
+                                    <label for="" class="form-label">Check-in</label>
+                                    <input type="date" name="guest_checkin" class="form-control" id="checkin">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="mb-3">
+                                    <label for="" class="form-label">Check-out</label>
+                                    <input type="date" name="guest_checkout" class="form-control" id="checkout">
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
                             <div class="mb-3">
-                            <label for="" class="form-label">metode Bayar</label>
-                            <select class="form-select" name="guest_room_number" id="" class="form-control">
+                            <label for="" class="form-label">Metode Bayar</label>
+                            <select class="form-select" name="payment" id="" class="form-control">
                                 <option value="">Pilih nomor kamar</option>
                                     <option value="cc">Credit Card</option>
                                     <option value="cash">Cash</option>
@@ -81,7 +99,7 @@
 
                             <div class="mb-3">
                             <label for="" class="form-label">Guest Note</label>
-                            <textarea type="text" class="form-control" placeholder="Input note" name="description"></textarea>
+                            <textarea type="text" class="form-control" placeholder="Input note" name="guest_note"></textarea>
                             </div>
 
                             <div class="card card-bg-light">
@@ -90,22 +108,28 @@
                                     <div class="d-flex justify-content-between">
                                         <span>Harga kamar (per malam)</span>
                                         <span id="roomrate">Rp.0</span>
+                                        <input type="hidden" name="" id="roomrateVal">
                                     </div>
                                     <div class="d-flex justify-content-between">
                                         <span>Berapa malam</span>
                                         <span id="totalnight">0</span>
+                                        <input type="hidden" name="" id="totalnightVal">
                                     </div>
                                     <div class="d-flex justify-content-between">
                                         <span>subtotal</span>
                                         <span id="subtotal">Rp.0</span>
+                                        <input type="hidden" name="" id="subtotalVal">
                                     </div>
                                     <div class="d-flex justify-content-between">
                                         <span>Tax (10%)</span>
-                                        <span id="subtotal">Rp.0</span>
+                                        <span id="tax">Rp.0</span>
+                                        <input type="hidden" name="" id="taxVal">
                                     </div>
+                                    <hr>
                                     <div class="d-flex justify-content-between">
                                         <span>Grand Total </span>
                                         <span id="totalAmount">Rp.0</span>
+                                        <input type="hidden" name="" id="totalAmountVal">
                                     </div>
                                 </div>
                             </div>
@@ -119,7 +143,7 @@
     </div> --}}
 
     <div class="mb-3">
-        <button type="submit" name="simpan" class="btn btn-primary">Simpan</button>
+        <button type="button" name="" class="btn btn-primary" id="save">Simpan</button>
         <a href="{{ url()->previous() }}">Kembali</a>
     </div>
                 </form>

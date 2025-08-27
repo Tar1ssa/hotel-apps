@@ -35,7 +35,49 @@ class ReservationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        try {
+            $data = $request->validate([
+                'reservation_number' => 'required',
+                'guest_name' => 'required',
+                'guest_email' => 'required|email',
+                'guest_phone' => 'required',
+                'guest_note' => 'nullable|string',
+                'guest_room_number' => 'nullable|string',
+                'guest_checkin' => 'required|date',
+                'guest_checkout' => 'required|date|after:checkin',
+                'payment_method' => 'required',
+                'guest_quantity' => 'required',
+                'room_id' => 'required',
+                'roomrate' => 'required',
+                'night' => 'required',
+                'subtotal' => 'required',
+                'tax' => 'required',
+                'totalamount' => 'required'
+            ]);
+
+            $create = Reservations::create($data);
+            return response()->json(
+                [
+                    'status' => 'success',
+                    'message' => 'reservasi cerate success',
+                    'data' => $create
+                ],
+                201
+            );
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Validation Error',
+                'error' => $e->errors()
+            ], 422);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Something went wrong',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
     /**

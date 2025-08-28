@@ -7,16 +7,41 @@ use App\Models\Reservations;
 use App\Models\User;
 use App\Models\Categories;
 use App\Models\Rooms;
+use Carbon\Carbon;
 
 class ReservationController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+
+    public function createReservationNumber()
+    {
+        $code_format = 'RSV';
+        $today = Carbon::now()->format('Ymd'); // akan menghasilkan format YYYMMDD
+        $prefix = $code_format . "-" . $today . "-";
+        $lastReservation = Reservations::whereDate('created_at', Carbon::today())->orderBy('id', 'desc')->first(); //first akan mengambil data langung berbentuk {data}, sedangkat get akan mengambil semua data dan berbentuk array [{data}]
+
+        if ($lastReservation) {
+            // $lastNumber = substr($lastReservation->reservation_number, -3); // akan mengambil 3 data/kata dari belakang dari $lastReservation (untuk mengambil id)
+            $lastNumber = $lastReservation->id; // atau gunakan line ini (untuk mengambil id)
+            $newNumber = str_pad($lastNumber, 3, "0", STR_PAD_LEFT); // akan
+        } else {
+            $newNumber = "001";
+        }
+
+        $reservation_number = $prefix . $newNumber;
+
+        return $reservation_number;
+    }
+
+
     public function index()
     {
-        $datas = Reservations::orderBy('id', 'desc')->get();
+        $datas = Reservations::with('rooms')->orderBy('id', 'desc')->get();
+        // return $datas;
         $title = "Data Reservasi";
+
         return view('reservation.index', compact('title', 'datas'));
     }
 
@@ -27,7 +52,8 @@ class ReservationController extends Controller
     {
         $title = "Tambah Reservasi";
         $categories = Categories::get();
-        return view('reservation.create', compact('title', 'categories'));
+        $reservation_number = $this->createReservationNumber();
+        return view('reservation.create', compact('title', 'categories', 'reservation_number'));
     }
 
     /**
@@ -39,28 +65,29 @@ class ReservationController extends Controller
         try {
             $data = $request->validate([
                 'reservation_number' => 'required',
-                'guest_name' => 'required',
-                'guest_email' => 'required|email',
-                'guest_phone' => 'required',
-                'guest_note' => 'nullable|string',
-                'guest_room_number' => 'nullable|string',
-                'guest_checkin' => 'required|date',
-                'guest_checkout' => 'required|date|after:checkin',
-                'payment_method' => 'required',
-                'guest_quantity' => 'required',
-                'room_id' => 'required',
-                'roomrate' => 'required',
-                'night' => 'required',
-                'subtotal' => 'required',
-                'tax' => 'required',
-                'totalamount' => 'required'
+                'guest_name'         => 'required',
+                'guest_email'        => 'required|email',
+                'guest_phone'        => 'required',
+                'guest_note'         => 'nullable|string',
+                'guest_room_number'  => 'nullable|string',
+                'guest_checkin'      => 'required|date',
+                'guest_checkout'     => 'required|date|after:checkin',
+                'payment_method'     => 'required',
+                'guest_quantity'     => 'required',
+                'room_id'            => 'required',
+                'roomrate'           => 'required',
+                'night'              => 'required',
+                'subtotal'           => 'required',
+                'tax'                => 'required',
+                'totalamount'        => 'required',
+                'isReserve'          => 1
             ]);
 
             $create = Reservations::create($data);
             return response()->json(
                 [
                     'status' => 'success',
-                    'message' => 'reservasi cerate success',
+                    'message' => 'reservasi create success',
                     'data' => $create
                 ],
                 201

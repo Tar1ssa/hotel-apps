@@ -26,7 +26,7 @@
                         @foreach ($datas as $keydatas => $valuedatas)
                             <tr>
                             <td>{{ $keydatas += 1 }}</td>
-                            <td>{{ $valuedatas->guest_name }}</td>
+                            <td>{{ $valuedatas->rooms->name }}</td>
                             <td>{{ $valuedatas->reservation_number }}</td>
                             <td>
                                 <small>
@@ -39,7 +39,7 @@
                             </td>
                             <td>{{ $valuedatas->guest_checkin }}</td>
                             <td>{{ $valuedatas->guest_checkout }}</td>
-                            <td>{{ $valuedatas->isReserve }}</td>
+                            <td><span class="{{ $valuedatas->isReserve_class }}">{{ $valuedatas->isReserve_text }}</span></td>
                             <td>
                                 <a href="{{ route('reservation.edit', $valuedatas->id) }}" class="btn btn-success">Edit</a>
                                 <form action="{{ route('reservation.destroy', $valuedatas->id) }}" method="post" class="d-inline">

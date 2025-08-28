@@ -168,7 +168,8 @@
     checkInInput.addEventListener('change', calculatedate);
     checkOutInput.addEventListener('change', calculatedate);
 
-    document.querySelector('#save').addEventListener('click',async function() {
+    document.querySelector('#save').addEventListener('click',async function(e) {
+        e.preventDefault();
         const guest_name = document.querySelector('input[name="guest_name"]').value;
         const guest_phone = document.querySelector('input[name="guest_phone"]').value;
         const guest_email = document.querySelector('input[name="guest_email"]').value;
@@ -186,7 +187,7 @@
         const tax = document.querySelector('#taxVal').value;
         const grandTotal = document.querySelector('#totalAmountVal').value;
 
-        const reservation_number = "12-22-2012";
+        const reservation_number = document.querySelector('input[name="reservation_number"]').value;
         const data = {
             reservation_number: reservation_number,
             guest_name: guest_name,
@@ -222,6 +223,10 @@
         const result = await res.json();
         if (res.ok) {
             alert('success');
+            setTimeout(() => {
+                window.location.href = "/reservation"
+
+            }, 2000); // 2 detik
         }
         } catch (error) {
             console.log("error", error);
